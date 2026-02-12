@@ -3,245 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cofarma - Distrileco</title>
+    <title>Cofarma App - Distrileco</title>
     <style>
         :root {
-            --primary: #d32f2f; /* Rojo Distrileco */
-            --secondary: #1976d2; /* Azul complementario */
-            --light: #f4f4f4;
-            --dark: #333;
+            --primary: #d32f2f;
+            --secondary: #1976d2;
+            --bg: #f8f9fa;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background-color: var(--light);
-            color: var(--dark);
+        body { font-family: sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
+        header { background: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); sticky: top; }
+        
+        /* Bloqueo por vencimiento */
+        #expired-screen { 
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
+            background: white; z-index: 9999; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
         }
 
-        header {
-            background-color: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        
+        .section-title { color: var(--secondary); border-left: 4px solid var(--primary); padding-left: 10px; margin: 20px 0 10px; }
+        
+        .client-form { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .client-form input, .client-form select, .client-form textarea { 
+            width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;
         }
 
-        .logo-container h1 {
-            margin: 0;
-            color: var(--primary);
-            font-size: 1.5rem;
+        .product-card { 
+            background: white; padding: 12px; margin-bottom: 10px; border-radius: 8px; 
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+        .product-info h4 { margin: 0; font-size: 0.9rem; }
+        .product-info small { color: #666; font-size: 0.8rem; }
 
-        .search-bar {
-            margin-top: 10px;
-            padding: 8px;
-            width: 90%;
-            border: 1px solid #ccc;
-            border-radius: 20px;
+        .qty-control { display: flex; align-items: center; gap: 10px; }
+        .btn-qty { 
+            background: #eee; border: none; width: 30px; height: 30px; 
+            border-radius: 50%; font-weight: bold; cursor: pointer; 
         }
+        .qty-val { font-weight: bold; min-width: 20px; text-align: center; }
 
-        .container {
-            padding: 15px;
-            max-width: 1200px;
-            margin: auto;
+        .footer-action { 
+            position: fixed; bottom: 0; width: 100%; background: white; 
+            padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center; 
         }
-
-        .category-title {
-            border-left: 5px solid var(--primary);
-            padding-left: 10px;
-            margin: 20px 0;
-            font-size: 1.2rem;
-            color: var(--secondary);
+        .btn-send { 
+            background: #25d366; color: white; border: none; padding: 12px 30px; 
+            border-radius: 25px; font-weight: bold; width: 90%; max-width: 400px; cursor: pointer;
         }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        .product-card h3 {
-            font-size: 0.9rem;
-            margin: 10px 0 5px;
-            height: 40px;
-            overflow: hidden;
-        }
-
-        .product-code {
-            font-size: 0.75rem;
-            color: #777;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        footer {
-            background: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 0.8rem;
-        }
-
-        .badge {
-            background: var(--primary);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-        }
+        
+        .branding { font-size: 0.7rem; color: #888; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-container">
-        <h1>DISTRILECO</h1>
-        <small>Distribuidor Autorizado COFARMA</small>
-    </div>
-    <input type="text" class="search-bar" placeholder="Buscar producto...">
-</header>
-
-<div class="container">
-    
-    <h2 class="category-title">Ambientadores Bon Aire</h2>
-    <div class="product-grid">
-        <div class="product-card">
-            <span class="badge">Nuevo</span>
-            <h3>Bon Aire Gel Repuesto x3 Manzana Canela</h3>
-            <span class="product-code">Código: 19932</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Aire Electra Repuesto x2 Vainilla</h3>
-            <span class="product-code">Código: 15172</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Aire Electra Oil Frutos Rojos</h3>
-            <span class="product-code">Código: 15168</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Aire Electra Oil Repuesto Frutos Rojos</h3>
-            <span class="product-code">Código: 15170</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Aire Eléctrico Repuesto x3 Frutos Rojos</h3>
-            <span class="product-code">Código: 15173</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Varitas Manzana Canela 80ml</h3>
-            <span class="product-code">Código: 15043</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Varitas Pomelo 80ml</h3>
-            <span class="product-code">Código: 15044</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Varitas Vainilla 80ml</h3>
-            <span class="product-code">Código: 15045</span>
-        </div>
-    </div>
-
-    <h2 class="category-title">Línea Pinolina (Limpieza)</h2>
-    <div class="product-grid">
-        <div class="product-card">
-            <h3>Pinolina Baby Fresh 960ml</h3>
-            <span class="product-code">Código: 15063</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Bambú 960ml</h3>
-            <span class="product-code">Código: 15064</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Canela 5000ml</h3>
-            <span class="product-code">Código: 15074</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Canela Miel DPK 200ml</h3>
-            <span class="product-code">Código: 15053</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Citronela 5000ml</h3>
-            <span class="product-code">Código: 15075</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Floral 960ml</h3>
-            <span class="product-code">Código: 15068</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Frutos Rojos 960ml</h3>
-            <span class="product-code">Código: 15070</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Lavanda 3785cc</h3>
-            <span class="product-code">Código: 15091</span>
-        </div>
-        <div class="product-card">
-            <h3>Pinolina Oxy Fusion Cítrica 960ml</h3>
-            <span class="product-code">Código: 19928</span>
-        </div>
-    </div>
-
-    <h2 class="category-title">Cuidado del Hogar e Insecticidas</h2>
-    <div class="product-grid">
-        <div class="product-card">
-            <h3>Aceite Citronela Alaska 250ml</h3>
-            <span class="product-code">Código: 15081</span>
-        </div>
-        <div class="product-card">
-            <h3>Ácido Desmanchador Alaska 460ml</h3>
-            <span class="product-code">Código: 15082</span>
-        </div>
-        <div class="product-card">
-            <h3>Creolina Alaska Concentrada 250cc</h3>
-            <span class="product-code">Código: 15083</span>
-        </div>
-        <div class="product-card">
-            <h3>Rayol Espiral x10 Rueditas</h3>
-            <span class="product-code">Código: 15076</span>
-        </div>
-        <div class="product-card">
-            <h3>Rayol Mata Voladores 230cc</h3>
-            <span class="product-code">Código: 15079</span>
-        </div>
-        <div class="product-card">
-            <h3>Rayol Spray Matatodo 400cc</h3>
-            <span class="product-code">Código: 15078</span>
-        </div>
-        <div class="product-card">
-            <h3>Bon Velaroma Bifásica Palo Santo</h3>
-            <span class="product-code">Código: 19929</span>
-        </div>
-    </div>
-
+<div id="expired-screen">
+    <h2 style="color: var(--primary)">Suscripción Vencida</h2>
+    <p>Por favor contacte al administrador para renovar el acceso.</p>
+    <p><b>Harold Marin: 3117700431</b></p>
 </div>
 
-<footer>
-    <p>&copy; 2026 Distrileco - Línea Cofarma</p>
-    <p>App desarrollada por Vibras Positivas. Reserva derechos de autor.</p>
-</footer>
+<div id="app-content">
+    <header>
+        <h2 style="margin:0; color: var(--primary);">DISTRILECO</h2>
+        <small>Línea Cofarma | Pedidos Rápidos</small>
+    </header>
+
+    <div class="container">
+        <div class="client-form">
+            <h3 style="margin-top:0">Datos del Cliente</h3>
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+            <input type="text" id="direccion" placeholder="Dirección de entrega" required>
+            <input type="tel" id="celular" placeholder="Celular" required>
+            <select id="forma_pago">
+                <option value="Contado">Contado</option>
+                <option value="Transferencia">Transferencia</option>
+                <option value="Crédito">Crédito</option>
+            </select>
+            <textarea id="observacion" placeholder="Observaciones adicionales"></textarea>
+        </div>
+
+        <h3 class="section-title">Productos Cofarma</h3>
+        <div id="lista-productos">
+            </div>
+        
+        <div class="branding">
+            App desarrollada por Vibras Positivas &copy; Derechos de Autor
+        </div>
+    </div>
+
+    <div class="footer-action">
+        <button class="btn-send" onclick="enviarWhatsApp()">Enviar Pedido a WhatsApp</button>
+    </div>
+</div>
+
+<script>
+    // --- CONFIGURACIÓN ---
+    const FECHA_VENCIMIENTO = "2027-12-31"; // Fecha límite de uso
+    const WHATSAPP_NUM = "573117700431";
+    const CONTACTO_ADMIN = "Harold Marin";
+
+    const productos = [
+        { id: "19932", nombre: "BON AIRE GEL REPT*3 MANZ/CANE", ref: "40G" },
+        { id: "15172", nombre: "BON AIRE ELECTR REPUESTO X 2 VAINILLA", ref: "12X25" },
+        { id: "15168", nombre: "BON AIRE ELECTRA OIL FRUTOS ROJOS", ref: "12X25 CC" },
+        { id: "15043", nombre: "BON VARITAS MANZANA CANELA", ref: "80ML" },
+        { id: "15074", nombre: "PINOLINA CANELA", ref: "5000ML" },
+        { id: "15063", nombre: "PINOLINA BABY FRESH", ref: "960ML" },
+        { id: "15083", nombre: "CREOLINA ALASKA CONCENTRADA", ref: "250CC" },
+        { id: "15076", nombre: "RAYOL ESPIRAL X 10 RUEDITAS", ref: "Und" },
+        { id: "15078", nombre: "RAYOL SPRAY MATATODO", ref: "400CC" }
+    ];
+
+    let carrito = {};
+
+    // --- LÓGICA DE CONTROL ---
+    function checkSuscripcion() {
+        const hoy = new Date();
+        const vencimiento = new Date(FECHA_VENCIMIENTO);
+        if (hoy > vencimiento) {
+            document.getElementById('app-content').style.display = 'none';
+            document.getElementById('expired-screen').style.display = 'flex';
+        }
+    }
+
+    function renderProductos() {
+        const container = document.getElementById('lista-productos');
+        container.innerHTML = productos.map(p => `
+            <div class="product-card">
+                <div class="product-info">
+                    <h4>${p.nombre}</h4>
+                    <small>Código: ${p.id} | ${p.ref}</small>
+                </div>
+                <div class="qty-control">
+                    <button class="btn-qty" onclick="updateQty('${p.id}', -1)">-</button>
+                    <span class="qty-val" id="qty-${p.id}">0</span>
+                    <button class="btn-qty" onclick="updateQty('${p.id}', 1)">+</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateQty(id, delta) {
+        if (!carrito[id]) carrito[id] = 0;
+        carrito[id] = Math.max(0, carrito[id] + delta);
+        document.getElementById(`qty-${id}`).innerText = carrito[id];
+    }
+
+    function enviarWhatsApp() {
+        const nombre = document.getElementById('nombre').value;
+        const direccion = document.getElementById('direccion').value;
+        const celular = document.getElementById('celular').value;
+        const pago = document.getElementById('forma_pago').value;
+        const obs = document.getElementById('observacion').value;
+
+        if (!nombre || !direccion || !celular) {
+            alert("Por favor complete los datos del cliente");
+            return;
+        }
+
+        let listaPedido = "";
+        for (const id in carrito) {
+            if (carrito[id] > 0) {
+                const p = productos.find(prod => prod.id === id);
+                listaPedido += `- ${p.nombre}: ${carrito[id]} und\n`;
+            }
+        }
+
+        if (listaPedido === "") {
+            alert("Debe agregar al menos un producto");
+            return;
+        }
+
+        const texto = `*PEDIDO COFARMA - DISTRILECO*\n\n` +
+            `*CLIENTE:* ${nombre}\n` +
+            `*DIRECCIÓN:* ${direccion}\n` +
+            `*CELULAR:* ${celular}\n` +
+            `*PAGO:* ${pago}\n` +
+            `*OBS:* ${obs}\n\n` +
+            `*PRODUCTOS:*\n${listaPedido}\n` +
+            `--------------------------\n` +
+            `*Contacto:* ${CONTACTO_ADMIN} (${WHATSAPP_NUM.substring(2)})\n` +
+            `_App desarrollada por Vibras Positivas derechos de autor_`;
+
+        const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUM}&text=${encodeURIComponent(texto)}`;
+        window.open(url, '_blank');
+    }
+
+    // Inicializar
+    checkSuscripcion();
+    renderProductos();
+</script>
 
 </body>
 </html>
-
