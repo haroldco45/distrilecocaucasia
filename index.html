@@ -11,23 +11,22 @@
         .logo-header { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; }
         .logo-header img { height: 45px; object-fit: contain; }
         .search-container { padding: 15px; max-width: 600px; margin: auto; }
-        #buscador { width: 100%; padding: 14px 20px; border: 2px solid #ddd; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
+        #buscador { width: 100%; padding: 12px 20px; border: 2px solid #ddd; border-radius: 30px; font-size: 16px; outline: none; box-sizing: border-box; }
         .container { padding: 0 15px; max-width: 650px; margin: auto; }
-        .client-form { background: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .client-form h3 { margin: 0 0 15px 0; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
-        .client-form input, .client-form select, .client-form textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        .product-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f0f0f0; }
+        .client-form { background: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .client-form h3 { margin-top:0; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .client-form input, .client-form select, .client-form textarea { width: 100%; padding: 12px; margin: 6px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .product-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; }
         .product-info h4 { margin: 0; font-size: 0.85rem; color: #333; text-transform: uppercase; line-height: 1.2; }
-        .product-info small { color: #7f8c8d; font-size: 0.75rem; margin-top: 5px; display: block; }
+        .product-info small { color: #666; font-size: 0.75rem; display: block; margin-top: 4px; }
         .product-info .price { color: var(--primary); font-weight: bold; font-size: 1rem; margin-top: 5px; display: block; }
         .qty-control { display: flex; align-items: center; gap: 12px; }
-        .btn-qty { background: #f0f0f0; border: 1px solid #ddd; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 20px; }
+        .btn-qty { background: #eee; border: none; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 20px; }
         .qty-val { font-weight: bold; min-width: 25px; text-align: center; font-size: 18px; color: var(--secondary); }
-        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); text-align: center; }
+        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); text-align: center; }
         .total-box { margin-bottom: 8px; font-weight: 800; font-size: 1.2rem; color: #333; }
         .btn-send { background: var(--success); color: white; border: none; padding: 16px; border-radius: 35px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
-        .distrileco-footer { background: #f8f9fa; padding: 20px; border-radius: 12px; font-size: 0.85rem; color: #555; margin-top: 20px; text-align: center; }
-        .branding { font-size: 0.75rem; color: #aaa; text-align: center; margin: 15px 0; }
+        .branding { font-size: 0.7rem; color: #999; text-align: center; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -40,34 +39,27 @@
 </header>
 
 <div class="search-container">
-    <input type="text" id="buscador" placeholder="🔍 Buscar por nombre o REF..." onkeyup="filtrar()">
+    <input type="text" id="buscador" placeholder="🔍 Buscar Cofarma por nombre o REF..." onkeyup="filtrar()">
 </div>
 
 <div class="container">
     <div class="client-form">
-        <h3>📋 Datos del Pedido</h3>
+        <h3>📋 Datos de Entrega</h3>
         <input type="text" id="nombre" placeholder="Nombre completo / Cliente">
-        <input type="text" id="direccion" placeholder="Dirección de entrega">
-        <input type="tel" id="celular" placeholder="Número de Celular">
+        <input type="text" id="direccion" placeholder="Dirección">
+        <input type="tel" id="celular" placeholder="Celular">
         <select id="forma_pago">
-            <option value="Contado">Contado</option>
-            <option value="Transferencia">Transferencia</option>
+            <option value="Contado">Efectivo / Contado</option>
+            <option value="Transferencia">Transferencia Bancaria</option>
             <option value="Crédito">Crédito</option>
         </select>
-        <textarea id="observacion" rows="2" placeholder="Observaciones adicionales"></textarea>
+        <textarea id="observacion" rows="2" placeholder="Observaciones"></textarea>
     </div>
 
     <div id="lista-productos"></div>
 
-    <div class="distrileco-footer">
-        <strong>DISTRILECO S.A.</strong><br>
-        📍 Carrera 2 diagonal 25 No 2-25<br>
-        Caucasia, Antioquia<br>
-        📞 <strong>WhatsApp: 311 770 0431</strong>
-    </div>
-
     <div class="branding">
-        Línea Cofarma - Distribución Autorizada<br>
+        Distribuido por Distrileco | Carrera 2 diag 25 No 2-25, Caucasia<br>
         <b>App desarrollada por Vibras Positivas © Derechos de Autor</b>
     </div>
 </div>
@@ -80,7 +72,6 @@
 <script>
     const WHATSAPP_DESTINO = "573117700431";
 
-    // LISTA EXTRAÍDA EXCLUSIVAMENTE DE pcofarma.xls (94 PRODUCTOS)
     const productos = [
         {"codigo": "19930", "med": "UND", "nombre": "BON AIRE GEL REPT MANZ/CANE 24*40G 0106", "valor": 2850},
         {"codigo": "19910", "med": "UND", "nombre": "TERGO GLOP INODORO 24*2*48G CITRU 010201", "valor": 8700},
@@ -88,10 +79,10 @@
         {"codigo": "19651", "med": "UND", "nombre": "ALASKA ALMIDON SPRAY PLANC 12*428ML 0101", "valor": 6750},
         {"codigo": "19496", "med": "UND", "nombre": "PINOLINA CANELA MIEL DPK 48*200ML BONIF", "valor": 1},
         {"codigo": "19075", "med": "UND", "nombre": "RAYOL ESPIRAL 50*2UND 0301", "valor": 800},
-        {"codigo": "19048", "med": "UND", "nombre": "PINOLINA CANELA 24*150ML  BONIF", "valor": 1},
+        {"codigo": "19048", "med": "UND", "nombre": "PINOLINA CANELA 24*150ML BONIF", "valor": 1},
         {"codigo": "18947", "med": "UND", "nombre": "CREOLINA ALASKA 12*480ML 10201", "valor": 7510},
         {"codigo": "18946", "med": "UND", "nombre": "RAYOL LIQUIDO ELECTRICO RPTO 12*30ML", "valor": 12920},
-        {"codigo": "18934", "med": "UND", "nombre": "PINOLINA CANELA 24*460ML  BONIF", "valor": 1},
+        {"codigo": "18934", "med": "UND", "nombre": "PINOLINA CANELA 24*460ML BONIF", "valor": 1},
         {"codigo": "18884", "med": "DISP", "nombre": "BON AIRE ELECTR RPT*3 SIERRA NEV + VAPOR", "valor": 22990},
         {"codigo": "18882", "med": "UND", "nombre": "BON AIRE GEL FRU ROJO MORA 12*80G 30102", "valor": 3880},
         {"codigo": "18693", "med": "UND", "nombre": "BON AIRE GEL REPT MORA SILVE 24*40G 0105", "valor": 2920},
@@ -186,7 +177,7 @@
             <div class="product-card" data-nombre="${p.nombre.toLowerCase()}" data-codigo="${p.codigo}">
                 <div class="product-info">
                     <h4>${p.nombre}</h4>
-                    <span class="details">REF: ${p.codigo} | Med: ${p.med}</span>
+                    <small>REF: ${p.codigo} | ${p.med}</small>
                     <span class="price">$${p.valor.toLocaleString()}</span>
                 </div>
                 <div class="qty-control">
@@ -219,7 +210,7 @@
 
     function enviarPedido() {
         const cli = { n: document.getElementById('nombre').value, d: document.getElementById('direccion').value, c: document.getElementById('celular').value, p: document.getElementById('forma_pago').value, o: document.getElementById('observacion').value };
-        if (!cli.n || !cli.d || !cli.c) return alert("Por favor complete los datos obligatorios del cliente");
+        if (!cli.n || !cli.d || !cli.c) return alert("Faltan datos del cliente");
 
         let items = ""; let total = 0;
         for (let k in carrito) {
@@ -230,18 +221,9 @@
                 total += sub;
             }
         }
-        if (!items) return alert("Debe agregar al menos un producto al pedido");
+        if (!items) return alert("El pedido está vacío");
 
-        const msg = `*NUEVO PEDIDO - COFARMA*\n\n` +
-                  `*CLIENTE:* ${cli.n}\n` +
-                  `*DIRECCIÓN:* ${cli.dir}\n` +
-                  `*CELULAR:* ${cli.c}\n` +
-                  `*FORMA DE PAGO:* ${cli.p}\n` +
-                  `*OBS:* ${cli.o}\n\n` +
-                  `*DETALLE DEL PEDIDO:*\n${items}\n` +
-                  `*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n` +
-                  `_App desarrollada por vibras positivas derechos de autor_`;
-
+        const msg = `*PEDIDO COFARMA - DISTRILECO*\n\n*Cliente:* ${cli.n}\n*Dir:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*DETALLE:*\n${items}\n*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n_App desarrollada por vibras positivas derechos de autor_`;
         window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
     }
 
