@@ -11,9 +11,31 @@
             --bg: #f8f9fa;
         }
 
-        body { font-family: sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
-        header { background: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); sticky: top; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 100px; }
         
+        /* Cabecera con dos logos */
+        header { 
+            background: white; 
+            padding: 10px 15px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
+
+        .logo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .logo-header img {
+            height: 50px; /* Ajuste de altura de los logos */
+            object-fit: contain;
+        }
+
         /* Bloqueo por vencimiento */
         #expired-screen { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
@@ -27,33 +49,33 @@
         
         .client-form { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .client-form input, .client-form select, .client-form textarea { 
-            width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;
+            width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 16px;
         }
 
         .product-card { 
             background: white; padding: 12px; margin-bottom: 10px; border-radius: 8px; 
             display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .product-info h4 { margin: 0; font-size: 0.9rem; }
+        .product-info h4 { margin: 0; font-size: 0.9rem; color: #333; }
         .product-info small { color: #666; font-size: 0.8rem; }
 
-        .qty-control { display: flex; align-items: center; gap: 10px; }
+        .qty-control { display: flex; align-items: center; gap: 12px; }
         .btn-qty { 
-            background: #eee; border: none; width: 30px; height: 30px; 
-            border-radius: 50%; font-weight: bold; cursor: pointer; 
+            background: #f0f0f0; border: 1px solid #ccc; width: 35px; height: 35px; 
+            border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px;
         }
-        .qty-val { font-weight: bold; min-width: 20px; text-align: center; }
+        .qty-val { font-weight: bold; min-width: 25px; text-align: center; font-size: 16px; }
 
         .footer-action { 
             position: fixed; bottom: 0; width: 100%; background: white; 
             padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center; 
         }
         .btn-send { 
-            background: #25d366; color: white; border: none; padding: 12px 30px; 
-            border-radius: 25px; font-weight: bold; width: 90%; max-width: 400px; cursor: pointer;
+            background: #25d366; color: white; border: none; padding: 15px; 
+            border-radius: 30px; font-weight: bold; width: 90%; max-width: 400px; cursor: pointer; font-size: 16px;
         }
         
-        .branding { font-size: 0.7rem; color: #888; margin-top: 10px; }
+        .branding { font-size: 0.75rem; color: #999; text-align: center; margin: 20px 0; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -61,48 +83,51 @@
 <div id="expired-screen">
     <h2 style="color: var(--primary)">Suscripción Vencida</h2>
     <p>Por favor contacte al administrador para renovar el acceso.</p>
-    <p><b>Harold Marin: 3117700431</b></p>
+    <p><b>Harold Marín: 3117700431</b></p>
 </div>
 
 <div id="app-content">
     <header>
-        <h2 style="margin:0; color: var(--primary);">DISTRILECO</h2>
-        <small>Línea Cofarma | Pedidos Rápidos</small>
+        <div class="logo-header">
+            <img src="https://raw.githubusercontent.com/haroldco45/distrilecocaucasia/main/distrileco-caucasia.PNG" alt="Distrileco">
+            <img src="https://raw.githubusercontent.com/haroldco45/distrilecocaucasia/main/cofarma.PNG" alt="Cofarma">
+        </div>
     </header>
 
     <div class="container">
         <div class="client-form">
-            <h3 style="margin-top:0">Datos del Cliente</h3>
+            <h3 style="margin-top:0; color: var(--primary);">Datos del Cliente</h3>
             <input type="text" id="nombre" placeholder="Nombre completo" required>
             <input type="text" id="direccion" placeholder="Dirección de entrega" required>
-            <input type="tel" id="celular" placeholder="Celular" required>
+            <input type="tel" id="celular" placeholder="Número de Celular" required>
             <select id="forma_pago">
+                <option value="" disabled selected>Seleccione Forma de Pago</option>
                 <option value="Contado">Contado</option>
                 <option value="Transferencia">Transferencia</option>
                 <option value="Crédito">Crédito</option>
             </select>
-            <textarea id="observacion" placeholder="Observaciones adicionales"></textarea>
+            <textarea id="observacion" rows="3" placeholder="Observaciones o notas del pedido"></textarea>
         </div>
 
-        <h3 class="section-title">Productos Cofarma</h3>
+        <h3 class="section-title">Catálogo de Productos</h3>
         <div id="lista-productos">
             </div>
         
         <div class="branding">
-            App desarrollada por Vibras Positivas &copy; Derechos de Autor
+            Línea Cofarma distribuida por Distrileco<br>
+            <b>App desarrollada por Vibras Positivas © Todos los derechos reservados</b>
         </div>
     </div>
 
     <div class="footer-action">
-        <button class="btn-send" onclick="enviarWhatsApp()">Enviar Pedido a WhatsApp</button>
+        <button class="btn-send" onclick="enviarWhatsApp()">Enviar Pedido al WhatsApp</button>
     </div>
 </div>
 
 <script>
-    // --- CONFIGURACIÓN ---
-    const FECHA_VENCIMIENTO = "2027-12-31"; // Fecha límite de uso
-    const WHATSAPP_NUM = "573117700431";
-    const CONTACTO_ADMIN = "Harold Marin";
+    // CONTROL DE SUSCRIPCIÓN (Fecha de vencimiento)
+    const FECHA_VENCIMIENTO = "2027-12-31"; 
+    const WHATSAPP_DESTINO = "573117700431";
 
     const productos = [
         { id: "19932", nombre: "BON AIRE GEL REPT*3 MANZ/CANE", ref: "40G" },
@@ -113,87 +138,78 @@
         { id: "15063", nombre: "PINOLINA BABY FRESH", ref: "960ML" },
         { id: "15083", nombre: "CREOLINA ALASKA CONCENTRADA", ref: "250CC" },
         { id: "15076", nombre: "RAYOL ESPIRAL X 10 RUEDITAS", ref: "Und" },
-        { id: "15078", nombre: "RAYOL SPRAY MATATODO", ref: "400CC" }
+        { id: "15079", nombre: "RAYOL MATA VOLADORES", ref: "230CC" },
+        { id: "15078", nombre: "RAYOL SPRAY MATATODO", ref: "400CC" },
+        { id: "19929", nombre: "BON VELAROMA BIFASICA PALO SANTO", ref: "12X103" }
     ];
 
     let carrito = {};
 
-    // --- LÓGICA DE CONTROL ---
-    function checkSuscripcion() {
-        const hoy = new Date();
-        const vencimiento = new Date(FECHA_VENCIMIENTO);
-        if (hoy > vencimiento) {
+    function checkEstado() {
+        if (new Date() > new Date(FECHA_VENCIMIENTO)) {
             document.getElementById('app-content').style.display = 'none';
             document.getElementById('expired-screen').style.display = 'flex';
         }
     }
 
-    function renderProductos() {
-        const container = document.getElementById('lista-productos');
-        container.innerHTML = productos.map(p => `
+    function cargarProductos() {
+        const div = document.getElementById('lista-productos');
+        div.innerHTML = productos.map(p => `
             <div class="product-card">
                 <div class="product-info">
                     <h4>${p.nombre}</h4>
-                    <small>Código: ${p.id} | ${p.ref}</small>
+                    <small>Cod: ${p.id} | Ref: ${p.ref}</small>
                 </div>
                 <div class="qty-control">
-                    <button class="btn-qty" onclick="updateQty('${p.id}', -1)">-</button>
+                    <button class="btn-qty" onclick="cambiarCant('${p.id}', -1)">-</button>
                     <span class="qty-val" id="qty-${p.id}">0</span>
-                    <button class="btn-qty" onclick="updateQty('${p.id}', 1)">+</button>
+                    <button class="btn-qty" onclick="cambiarCant('${p.id}', 1)">+</button>
                 </div>
             </div>
         `).join('');
     }
 
-    function updateQty(id, delta) {
+    function cambiarCant(id, valor) {
         if (!carrito[id]) carrito[id] = 0;
-        carrito[id] = Math.max(0, carrito[id] + delta);
+        carrito[id] = Math.max(0, carrito[id] + valor);
         document.getElementById(`qty-${id}`).innerText = carrito[id];
     }
 
     function enviarWhatsApp() {
-        const nombre = document.getElementById('nombre').value;
-        const direccion = document.getElementById('direccion').value;
-        const celular = document.getElementById('celular').value;
-        const pago = document.getElementById('forma_pago').value;
-        const obs = document.getElementById('observacion').value;
+        const cli = {
+            nom: document.getElementById('nombre').value,
+            dir: document.getElementById('direccion').value,
+            cel: document.getElementById('celular').value,
+            pag: document.getElementById('forma_pago').value,
+            obs: document.getElementById('observacion').value
+        };
 
-        if (!nombre || !direccion || !celular) {
-            alert("Por favor complete los datos del cliente");
-            return;
-        }
+        if (!cli.nom || !cli.dir || !cli.cel) return alert("Por favor llena los datos del cliente");
 
-        let listaPedido = "";
+        let items = "";
         for (const id in carrito) {
             if (carrito[id] > 0) {
-                const p = productos.find(prod => prod.id === id);
-                listaPedido += `- ${p.nombre}: ${carrito[id]} und\n`;
+                const prod = productos.find(p => p.id === id);
+                items += `✅ ${prod.nombre} x${carrito[id]}\n`;
             }
         }
 
-        if (listaPedido === "") {
-            alert("Debe agregar al menos un producto");
-            return;
-        }
+        if (!items) return alert("Agrega al menos un producto al pedido");
 
-        const texto = `*PEDIDO COFARMA - DISTRILECO*\n\n` +
-            `*CLIENTE:* ${nombre}\n` +
-            `*DIRECCIÓN:* ${direccion}\n` +
-            `*CELULAR:* ${celular}\n` +
-            `*PAGO:* ${pago}\n` +
-            `*OBS:* ${obs}\n\n` +
-            `*PRODUCTOS:*\n${listaPedido}\n` +
-            `--------------------------\n` +
-            `*Contacto:* ${CONTACTO_ADMIN} (${WHATSAPP_NUM.substring(2)})\n` +
-            `_App desarrollada por Vibras Positivas derechos de autor_`;
+        const msg = `*NUEVO PEDIDO - COFARMA*\n\n` +
+                  `*Cliente:* ${cli.nom}\n` +
+                  `*Dirección:* ${cli.dir}\n` +
+                  `*Celular:* ${cli.cel}\n` +
+                  `*Pago:* ${cli.pag}\n` +
+                  `*Obs:* ${cli.obs}\n\n` +
+                  `*PRODUCTOS:*\n${items}\n` +
+                  `_App desarrollada por vibras positivas derechos de autor_`;
 
-        const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUM}&text=${encodeURIComponent(texto)}`;
-        window.open(url, '_blank');
+        window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
     }
 
-    // Inicializar
-    checkSuscripcion();
-    renderProductos();
+    checkEstado();
+    cargarProductos();
 </script>
 
 </body>
