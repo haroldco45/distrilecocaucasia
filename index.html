@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cofarma App - Distrileco</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        :root { --primary: #d32f2f; --secondary: #1976d2; --bg: #f4f7f6; --success: #25d366; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 140px; }
+        header { background: white; padding: 12px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo-header { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; }
+        .logo-header img { height: 45px; object-fit: contain; }
+        .search-container { padding: 15px; max-width: 600px; margin: auto; }
+        #buscador { width: 100%; padding: 12px 20px; border: 2px solid #ddd; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
+        .container { padding: 0 15px; max-width: 650px; margin: auto; }
+        .client-form { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .client-form h3 { margin: 0 0 10px 0; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .client-form input, .client-form select, .client-form textarea { width: 100%; padding: 12px; margin: 6px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        .product-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; }
+        .product-info h4 { margin: 0; font-size: 0.85rem; color: #333; text-transform: uppercase; }
+        .product-info small { color: #666; font-size: 0.75rem; display: block; margin-top: 4px; }
+        .product-info .price { color: var(--primary); font-weight: bold; font-size: 1rem; margin-top: 4px; display: block; }
+        .qty-control { display: flex; align-items: center; gap: 10px; }
+        .btn-qty { background: #eee; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px; }
+        .qty-val { font-weight: bold; min-width: 25px; text-align: center; font-size: 18px; color: var(--secondary); }
+        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); text-align: center; }
+        .total-banner { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; color: #333; }
+        .btn-send { background: var(--success); color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
+        .branding { font-size: 0.7rem; color: #999; text-align: center; margin: 15px 0; }
+    </style>
+</head>
+<body>
 
+<header>
+    <div class="logo-header">
+        <img src="https://raw.githubusercontent.com/haroldco45/distrilecocaucasia/main/distrileco-caucasia.PNG" alt="Distrileco">
+        <img src="https://raw.githubusercontent.com/haroldco45/distrilecocaucasia/main/cofarma.PNG" alt="Cofarma">
+    </div>
+</header>
+
+<div class="search-container">
+    <input type="text" id="buscador" placeholder="🔍 Buscar en la lista externa..." onkeyup="filtrar()">
+</div>
+
+<div class="container">
+    <div class="client-form">
+        <h3>📍 Datos de Entrega</h3>
+        <input type="text" id="nombre" placeholder="Nombre completo / Cliente">
+        <input type="text" id="direccion" placeholder="Dirección exacta">
+        <input type="tel" id="celular" placeholder="Celular">
+        <select id="forma_pago">
+            <option value="Contado">Contado</option>
+            <option value="Transferencia">Transferencia</option>
+            <option value="Crédito">Crédito</option>
+        </select>
+        <textarea id="observacion" rows="2" placeholder="Notas adicionales"></textarea>
+    </div>
+
+    <div id="lista-productos">
+        <p style="text-align:center;">Cargando productos desde el archivo...</p>
+    </div>
+
+    <div class="branding">
+        Distribuido por Distrileco | Carrera 2 diag 25 No 2-25, Caucasia<br>
+        <b>App desarrollada por Vibras Positivas © Derechos de Autor</b>
+    </div>
+</div>
+
+<div class="footer-action">
+    <div class="total-banner" id="gran-total">Total: $0</div>
+    <button class="btn-send" onclick="enviarPedido()">🚀 Enviar Pedido a WhatsApp</button>
+</div>
+
+<script>
+    const WHATSAPP_DESTINO = "573117700431";
+    const ARCHIVO_CSV = "pcofarma.xls - Hoja1.csv"; // NOMBRE EXACTO DE TU ARCHIVO
+
+    let productosOficiales = [];
+    let carrito = {};
+
+    // FUNCIÓN PARA CARGAR EL ARCHIVO EXTERNO
+    function cargarArchivoExterno() {
+        Papa.parse(ARCHIVO_CSV, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                // Procesamos los datos con la lupa
+                productosOficiales = results.data.map(fila => ({
+                    codigo: fila.REF ? fila.REF.replace('.0', '').trim() : '',
+                    med: fila.MED || 'UND',
+                    nombre: fila['NOMBRE O DESCRIPCION'] || '',
+                    valor: parseInt(fila['PRECIO BASE']) || 0
+                })).filter(p => p.codigo !== '');
+
+                renderProductos();
+            },
+            error: function(err) {
+                document.getElementById('lista-productos').innerHTML = 
+                `<p style="color:red; text-align:center;">Error: No se encontró el archivo "${ARCHIVO_CSV}" en la carpeta.</p>`;
+            }
+        });
+    }
+
+    function renderProductos() {
+        const div = document.getElementById('lista-productos');
+        div.innerHTML = productosOficiales.map(p => `
+            <div class="product-card" data-nombre="${p.nombre.toLowerCase()}" data-codigo="${p.codigo}">
+                <div class="product-info">
+                    <h4>${p.nombre}</h4>
+                    <small>REF: ${p.codigo} | ${p.med}</small>
+                    <span class="price">$${p.valor.toLocaleString()}</span>
+                </div>
+                <div class="qty-control">
+                    <button class="btn-qty" onclick="act('${p.codigo}', -1)">-</button>
+                    <span class="qty-val" id="q-${p.codigo}">0</span>
+                    <button class="btn-qty" onclick="act('${p.codigo}', 1)">+</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filtrar() {
+        const q = document.getElementById('buscador').value.toLowerCase();
+        document.querySelectorAll('.product-card').forEach(c => {
+            const match = c.dataset.nombre.includes(q) || c.dataset.codigo.includes(q);
+            c.style.display = match ? 'flex' : 'none';
+        });
+    }
+
+    function act(id, v) {
+        carrito[id] = Math.max(0, (carrito[id] || 0) + v);
+        document.getElementById(`q-${id}`).innerText = carrito[id];
+        let total = 0;
+        for (let k in carrito) {
+            let p = productosOficiales.find(x => x.codigo === k);
+            if(p) total += (p.valor * carrito[k]);
+        }
+        document.getElementById('gran-total').innerText = `Total: $${total.toLocaleString()}`;
+    }
+
+    function enviarPedido() {
+        const cli = { n: document.getElementById('nombre').value, d: document.getElementById('direccion').value, c: document.getElementById('celular').value, p: document.getElementById('forma_pago').value, o: document.getElementById('observacion').value };
+        if (!cli.n || !cli.d || !cli.c) return alert("Faltan datos del cliente");
+
+        let items = ""; let total = 0;
+        for (let k in carrito) {
+            if (carrito[k] > 0) {
+                let p = productosOficiales.find(x => x.codigo === k);
+                let sub = p.valor * carrito[k];
+                items += `✅ ${p.nombre}\n   ${carrito[k]} x $${p.valor.toLocaleString()} = $${sub.toLocaleString()}\n`;
+                total += sub;
+            }
+        }
+        if (!items) return alert("El pedido está vacío");
+
+        const msg = `*PEDIDO COFARMA - DISTRILECO*\n\n*Cliente:* ${cli.n}\n*Dir:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*DETALLE:*\n${items}\n*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n_Vibras Positivas ©_`;
+        window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
+    }
+
+    // Arrancamos la carga
+    cargarArchivoExterno();
+</script>
+</body>
+</html>
