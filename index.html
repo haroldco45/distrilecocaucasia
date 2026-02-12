@@ -6,7 +6,7 @@
     <title>Pedidos Cofarma - Distrileco</title>
     <style>
         :root { --primary: #d32f2f; --secondary: #1976d2; --bg: #f4f7f6; }
-        body { font-family: sans-serif; margin: 0; background: var(--bg); padding-bottom: 140px; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 140px; }
         header { background: white; padding: 12px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .logo-header { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; }
         .logo-header img { height: 45px; object-fit: contain; }
@@ -22,7 +22,7 @@
         .qty-control { display: flex; align-items: center; gap: 10px; }
         .btn-qty { background: #eee; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px; }
         .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); text-align: center; }
-        .total-box { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; }
+        .total-box { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; color: var(--primary); }
         .btn-send { background: #25d366; color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
         .branding { font-size: 0.7rem; color: #999; text-align: center; margin: 15px 0; }
     </style>
@@ -37,40 +37,41 @@
 </header>
 
 <div class="search-container">
-    <input type="text" id="buscador" placeholder="🔍 Buscar producto..." onkeyup="filtrar()">
+    <input type="text" id="buscador" placeholder="🔍 Buscar por nombre o código..." onkeyup="filtrar()">
 </div>
 
 <div class="container">
     <div class="client-form">
-        <input type="text" id="nombre" placeholder="Nombre / Negocio">
-        <input type="text" id="direccion" placeholder="Dirección">
+        <h3 style="margin-top:0; color: var(--primary); font-size: 1.1rem;">Datos del Pedido</h3>
+        <input type="text" id="nombre" placeholder="Nombre / Cliente">
+        <input type="text" id="direccion" placeholder="Dirección de entrega">
         <input type="tel" id="celular" placeholder="Celular">
         <select id="forma_pago">
             <option value="Contado">Contado</option>
             <option value="Transferencia">Transferencia</option>
             <option value="Crédito">Crédito</option>
         </select>
-        <textarea id="observacion" rows="2" placeholder="Observaciones"></textarea>
+        <textarea id="observacion" rows="2" placeholder="Notas adicionales"></textarea>
     </div>
 
     <div id="lista-productos"></div>
 
     <div class="branding">
-        Distribuido por Distrileco | Carrera 2 diag 25 No 2-25, Caucasia<br>
+        Distribuido por Distrileco | Carrera 2 diag 25 No 2-25, Caucasia <br>
         <b>App desarrollada por Vibras Positivas © Derechos de Autor</b>
     </div>
 </div>
 
 <div class="footer-action">
-    <div class="total-box" id="gran-total">Total: $0</div>
-    <button class="btn-send" onclick="enviar()">🚀 Enviar Pedido WhatsApp</button>
+    <div class="total-box" id="gran-total">Total Pedido: $0</div>
+    <button class="btn-send" onclick="enviar()">🚀 Enviar a WhatsApp 3117700431</button>
 </div>
 
 <script>
     const FECHA_VENCIMIENTO = "2027-12-31";
     const WHATSAPP_DESTINO = "573117700431";
 
-    // --- LISTA OFICIAL VERIFICADA (94 PRODUCTOS) ---
+    // --- LISTA OFICIAL REVISADA UNO A UNO ---
     const productos = [
         {"codigo": "19930", "med": "UND", "nombre": "BON AIRE GEL REPT MANZ/CANE 24*40G 0106", "valor": 2850},
         {"codigo": "19910", "med": "UND", "nombre": "TERGO GLOP INODORO 24*2*48G CITRU 010201", "valor": 8700},
@@ -87,8 +88,8 @@
         {"codigo": "18693", "med": "UND", "nombre": "BON AIRE GEL REPT MORA SILVE 24*40G 0105", "valor": 2920},
         {"codigo": "18532", "med": "UND", "nombre": "BON AIRE GEL MORA CANASTA 12*40GR 0206", "valor": 4770},
         {"codigo": "18278", "med": "UND", "nombre": "RAYOL LIQ PISTOLA MATATODO 12*460ML 0101", "valor": 9050},
-        {"codigo": "18221", "med": "UND", "nombre": "BON AIRE ELECT OIL VAINILLA;AMBAR 12*25 0107", "valor": 12580},
-        {"codigo": "18169", "med": "UND", "nombre": "BON AIRE ELECT RPT MANDARINA;TORON 12*25 0207", "valor": 8850},
+        {"codigo": "18221", "med": "UND", "nombre": "BON AIRE ELECT OIL VAINILLA AMBAR 12*25 0107", "valor": 12580},
+        {"codigo": "18169", "med": "UND", "nombre": "BON AIRE ELECT RPT MANDARINA TORON 12*25 0207", "valor": 8850},
         {"codigo": "17918", "med": "UND", "nombre": "SPRAY DESINFECT COOL WATE DEOX 12*400", "valor": 10320},
         {"codigo": "17917", "med": "UND", "nombre": "BON SPRAY VAINILLA Y AMBAR 12*400ML", "valor": 8290},
         {"codigo": "17869", "med": "UND", "nombre": "BON SPRAY FRUTAS DEL CARIBE 12*400 30116", "valor": 8290},
@@ -173,7 +174,7 @@
     function render() {
         const div = document.getElementById('lista-productos');
         div.innerHTML = productos.map(p => `
-            <div class="product-card" data-nombre="${p.nombre.toLowerCase()}">
+            <div class="product-card" data-nombre="${p.nombre.toLowerCase()}" data-codigo="${p.codigo}">
                 <div class="product-info">
                     <h4>${p.nombre}</h4>
                     <small>Cód: ${p.codigo} | ${p.med}</small>
@@ -191,7 +192,8 @@
     function filtrar() {
         const q = document.getElementById('buscador').value.toLowerCase();
         document.querySelectorAll('.product-card').forEach(c => {
-            c.style.display = c.dataset.nombre.includes(q) ? 'flex' : 'none';
+            const match = c.dataset.nombre.includes(q) || c.dataset.codigo.includes(q);
+            c.style.display = match ? 'flex' : 'none';
         });
     }
 
@@ -202,22 +204,23 @@
         for (let k in carrito) {
             total += (productos.find(x => x.codigo === k).valor * carrito[k]);
         }
-        document.getElementById('gran-total').innerText = `Total: $${total.toLocaleString()}`;
+        document.getElementById('gran-total').innerText = `Total Pedido: $${total.toLocaleString()}`;
     }
 
     function enviar() {
         const cli = { n: document.getElementById('nombre').value, d: document.getElementById('direccion').value, c: document.getElementById('celular').value, p: document.getElementById('forma_pago').value, o: document.getElementById('observacion').value };
-        if (!cli.n || !cli.d || !cli.c) return alert("Faltan datos");
+        if (!cli.n || !cli.d || !cli.c) return alert("Por favor complete los datos del cliente");
         let items = ""; let total = 0;
         for (let k in carrito) {
             if (carrito[k] > 0) {
                 let p = productos.find(x => x.codigo === k);
-                items += `• ${p.nombre} (${carrito[k]} x $${p.valor.toLocaleString()}) = $${(p.valor * carrito[k]).toLocaleString()}\n`;
-                total += (p.valor * carrito[k]);
+                let sub = p.valor * carrito[k];
+                items += `✅ ${p.nombre}\n   ${carrito[k]} x $${p.valor.toLocaleString()} = $${sub.toLocaleString()}\n`;
+                total += sub;
             }
         }
-        if (!items) return alert("Sin productos");
-        const msg = `*PEDIDO COFARMA*\n*Cli:* ${cli.n}\n*Dir:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*Pedido:*\n${items}\n*Total: $${total.toLocaleString()}*\n\n_Vibras Positivas ©_`;
+        if (!items) return alert("Agregue al menos un producto");
+        const msg = `*PEDIDO COFARMA - DISTRILECO*\n\n*Cliente:* ${cli.n}\n*Dir:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*Detalle del Pedido:*\n${items}\n*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n_Vibras Positivas © Derechos de Autor_`;
         window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
     }
 
