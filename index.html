@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos Cofarma - Distrileco</title>
+    <title>Pedidos Línea Cofarma - Distrileco</title>
     <style>
         :root { --primary: #d32f2f; --secondary: #1976d2; --bg: #f4f7f6; --success: #25d366; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 140px; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--bg); padding-bottom: 140px; }
         header { background: white; padding: 12px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .logo-header { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; }
         .logo-header img { height: 45px; object-fit: contain; }
         .search-container { padding: 15px; max-width: 600px; margin: auto; }
-        #buscador { width: 100%; padding: 12px 20px; border: 2px solid #ddd; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
+        #buscador { width: 100%; padding: 14px 20px; border: 2px solid #ddd; border-radius: 30px; font-size: 16px; outline: none; box-sizing: border-box; }
         .container { padding: 0 15px; max-width: 650px; margin: auto; }
-        .client-form { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .client-form h3 { margin-top:0; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-        .client-form input, .client-form select, .client-form textarea { width: 100%; padding: 12px; margin: 6px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        .product-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; }
-        .product-info h4 { margin: 0; font-size: 0.85rem; color: #333; text-transform: uppercase; }
-        .product-info small { color: #666; font-size: 0.75rem; display: block; margin-top: 4px; }
-        .product-info .price { color: var(--primary); font-weight: bold; font-size: 1rem; margin-top: 4px; display: block; }
-        .qty-control { display: flex; align-items: center; gap: 10px; }
-        .btn-qty { background: #eee; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px; }
+        .client-form { background: white; padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .client-form h3 { margin: 0 0 15px 0; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .client-form input, .client-form select, .client-form textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .product-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f0f0f0; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .product-info h4 { margin: 0; font-size: 0.85rem; color: #333; text-transform: uppercase; line-height: 1.2; }
+        .product-info small { color: #7f8c8d; font-size: 0.75rem; margin-top: 5px; display: block; }
+        .product-info .price { color: var(--primary); font-weight: bold; font-size: 1rem; margin-top: 5px; display: block; }
+        .qty-control { display: flex; align-items: center; gap: 12px; }
+        .btn-qty { background: #f0f0f0; border: 1px solid #ddd; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 20px; }
         .qty-val { font-weight: bold; min-width: 25px; text-align: center; font-size: 18px; color: var(--secondary); }
-        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); text-align: center; }
-        .total-banner { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; color: #333; }
-        .btn-send { background: var(--success); color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
-        .distrileco-footer { background: #eee; padding: 15px; border-radius: 8px; font-size: 0.8rem; color: #555; margin-top: 20px; text-align: center; }
-        .branding { font-size: 0.7rem; color: #999; text-align: center; margin: 15px 0; }
+        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); text-align: center; }
+        .total-box { margin-bottom: 8px; font-weight: 800; font-size: 1.2rem; color: #333; }
+        .btn-send { background: var(--success); color: white; border: none; padding: 16px; border-radius: 35px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
+        .distrileco-footer { background: #f8f9fa; padding: 20px; border-radius: 12px; font-size: 0.85rem; color: #555; margin-top: 20px; text-align: center; }
+        .branding { font-size: 0.75rem; color: #aaa; text-align: center; margin: 15px 0; }
     </style>
 </head>
 <body>
@@ -45,24 +45,25 @@
 
 <div class="container">
     <div class="client-form">
-        <h3>📍 Datos de Entrega</h3>
-        <input type="text" id="nombre" placeholder="Nombre completo / Cliente">
-        <input type="text" id="direccion" placeholder="Dirección exacta">
-        <input type="tel" id="celular" placeholder="Celular">
+        <h3>📋 Datos del Cliente</h3>
+        <input type="text" id="nombre" placeholder="Nombre completo / Razón Social">
+        <input type="text" id="direccion" placeholder="Dirección de entrega">
+        <input type="tel" id="celular" placeholder="Número de Celular">
         <select id="forma_pago">
-            <option value="Contado">Contado</option>
-            <option value="Transferencia">Transferencia</option>
+            <option value="Contado">Efectivo / Contado</option>
+            <option value="Transferencia">Transferencia Bancaria</option>
             <option value="Crédito">Crédito</option>
         </select>
-        <textarea id="observacion" rows="2" placeholder="Notas adicionales"></textarea>
+        <textarea id="observacion" rows="2" placeholder="Observaciones del pedido"></textarea>
     </div>
 
     <div id="lista-productos"></div>
 
     <div class="distrileco-footer">
         <strong>DISTRILECO S.A.</strong><br>
-        Carrera 2 diagonal 25 No 2-25, Caucasia Antioquia<br>
-        Celular/WhatsApp: 311 770 0431
+        📍 Carrera 2 diagonal 25 No 2-25<br>
+        Caucasia, Antioquia<br>
+        📞 <strong>WhatsApp: 311 770 0431</strong>
     </div>
 
     <div class="branding">
@@ -72,7 +73,7 @@
 </div>
 
 <div class="footer-action">
-    <div class="total-banner" id="gran-total">Total: $0</div>
+    <div class="total-box" id="gran-total">Total Pedido: $0</div>
     <button class="btn-send" onclick="enviarPedido()">🚀 Enviar Pedido a WhatsApp</button>
 </div>
 
@@ -95,26 +96,26 @@
         {"codigo": "18693", "med": "UND", "nombre": "BON AIRE GEL REPT MORA SILVE 24*40G 0105", "valor": 2920},
         {"codigo": "18532", "med": "UND", "nombre": "BON AIRE GEL MORA CANASTA 12*40GR 0206", "valor": 4770},
         {"codigo": "18278", "med": "UND", "nombre": "RAYOL LIQ PISTOLA MATATODO 12*460ML 0101", "valor": 9050},
-        {"codigo": "18221", "med": "UND", "nombre": "BON AIRE ELECT OIL VAINILLA AMBAR 12*25 0107", "valor": 12580},
-        {"codigo": "18169", "med": "UND", "nombre": "BON AIRE ELECT RPT MANDARINA TORON 12*25 0207", "valor": 8850},
+        {"codigo": "18221", "med": "UND", "nombre": "BON AIRE ELECT OIL VAINILLA AMBAR 12*25", "valor": 12580},
+        {"codigo": "18169", "med": "UND", "nombre": "BON AIRE ELECT RPT MANDARINA TORON 12*25", "valor": 8850},
         {"codigo": "17918", "med": "UND", "nombre": "SPRAY DESINFECT COOL WATE DEOX 12*400", "valor": 10320},
         {"codigo": "17917", "med": "UND", "nombre": "BON SPRAY VAINILLA Y AMBAR 12*400ML", "valor": 8290},
-        {"codigo": "17869", "med": "UND", "nombre": "BON SPRAY FRUTAS DEL CARIBE 12*400 30116", "valor": 8290},
-        {"codigo": "17376", "med": "UND", "nombre": "BON AIRE ELECTA RPT*3 SURTIDO 12*25ML 03", "valor": 21580},
-        {"codigo": "17337", "med": "UND", "nombre": "BON GEL CONO FRUTAS CARIBE 12*170GR 0103", "valor": 5650},
+        {"codigo": "17869", "med": "UND", "nombre": "BON SPRAY FRUTAS DEL CARIBE 12*400", "valor": 8290},
+        {"codigo": "17376", "med": "UND", "nombre": "BON AIRE ELECTA RPT*3 SURTIDO 12*25ML", "valor": 21580},
+        {"codigo": "17337", "med": "UND", "nombre": "BON GEL CONO FRUTAS CARIBE 12*170GR", "valor": 5650},
         {"codigo": "17101", "med": "UND", "nombre": "CREOLINA ALASKA 1*20LT 0101", "valor": 234100},
-        {"codigo": "17076", "med": "UND", "nombre": "BON AIRE ELECTRA OIL F/CARI 12*25ML 0108", "valor": 12300},
+        {"codigo": "17076", "med": "UND", "nombre": "BON AIRE ELECTRA OIL F/CARI 12*25ML", "valor": 12300},
         {"codigo": "16310", "med": "UND", "nombre": "CREOLINA ALASKA 12*1000ML 0102", "valor": 13910},
-        {"codigo": "15599", "med": "UND", "nombre": "BON AIRE AUTOMADEIRA VAINI 12*6ML 0103", "valor": 8500},
+        {"codigo": "15599", "med": "UND", "nombre": "BON AIRE AUTOMADEIRA VAINI 12*6ML", "valor": 8500},
         {"codigo": "15426", "med": "UND", "nombre": "ALASKA ALMIDON PIST 12*500ML 0202", "valor": 8635},
         {"codigo": "15425", "med": "UND", "nombre": "ALASKA ALMIDON DOY PACK 12*500", "valor": 4800},
-        {"codigo": "15173", "med": "UND", "nombre": "BON AIRE ELECT RPT*3 FRU ROJO 12*25ML 02", "valor": 21580},
-        {"codigo": "15172", "med": "UND", "nombre": "BON AIRE ELECT RPT*2 VAINILL 12*25ML 01", "valor": 15470},
+        {"codigo": "15173", "med": "UND", "nombre": "BON AIRE ELECT RPT*3 FRU ROJO 12*25ML", "valor": 21580},
+        {"codigo": "15172", "med": "UND", "nombre": "BON AIRE ELECT RPT*2 VAINILL 12*25ML", "valor": 15470},
         {"codigo": "15171", "med": "UND", "nombre": "BON AIRE ELECTRICO APARATO+RPTO VAINI", "valor": 12380},
-        {"codigo": "15170", "med": "UND", "nombre": "BON AIRE ELECT RPT FRU ROJO 12*25ML 01", "valor": 8550},
+        {"codigo": "15170", "med": "UND", "nombre": "BON AIRE ELECT RPT FRU ROJO 12*25ML", "valor": 8550},
         {"codigo": "15169", "med": "UND", "nombre": "BON AIRE ELECTRICO APARATO+RPTO F/ROJO", "valor": 12380},
-        {"codigo": "15168", "med": "UND", "nombre": "BON AIRE ELECTRA OIL F/ROJO 12*25ML 0104", "valor": 12600},
-        {"codigo": "15154", "med": "UND", "nombre": "BON AIRE AEROSOL VAINILLA 12*250ML 0204", "valor": 16430},
+        {"codigo": "15168", "med": "UND", "nombre": "BON AIRE ELECTRA OIL F/ROJO 12*25ML", "valor": 12600},
+        {"codigo": "15154", "med": "UND", "nombre": "BON AIRE AEROSOL VAINILLA 12*250ML", "valor": 16430},
         {"codigo": "15112", "med": "UND", "nombre": "PINOLINA CITRONELA 1*20LT 0103", "valor": 68670},
         {"codigo": "15102", "med": "UND", "nombre": "PINOLINA CANELA 1*20LT 0102", "valor": 68670},
         {"codigo": "15094", "med": "UND", "nombre": "PINOLINA LAVANDA 6*2000UND 0121", "valor": 8900},
@@ -124,7 +125,7 @@
         {"codigo": "15090", "med": "UND", "nombre": "PINOLINA CANELA 4*3785CC 0103", "valor": 16400},
         {"codigo": "15083", "med": "UND", "nombre": "CREOLINA ALASKA 24*250CC 0101", "valor": 5260},
         {"codigo": "15082", "med": "UND", "nombre": "ACIDO DESMANCHADOR 24*460ML 0102", "valor": 5000},
-        {"codigo": "15081", "med": "UND", "nombre": "ACEITE DE CITRONELA ALASKA 12*250ML 0101", "valor": 10600},
+        {"codigo": "15081", "med": "UND", "nombre": "ACEITE DE CITRONELA ALASKA 12*250ML", "valor": 10600},
         {"codigo": "15079", "med": "UND", "nombre": "RAYOL MATA VOLADORES 12*230CC 0101", "valor": 6900},
         {"codigo": "15078", "med": "UND", "nombre": "RAYOL SPRAY MATATODO 12*400CC 0102", "valor": 10580},
         {"codigo": "15077", "med": "UND", "nombre": "RAYOL SPRAY MATATODO 12*230CC 0103", "valor": 6900},
@@ -162,12 +163,12 @@
         {"codigo": "15045", "med": "UND", "nombre": "BON VARITAS VAINILLA 12*80ML 20115", "valor": 12900},
         {"codigo": "15044", "med": "UND", "nombre": "BON VARITAS POMELO 12*80ML 20114", "valor": 12900},
         {"codigo": "15043", "med": "UND", "nombre": "BON VARITAS MANZANA CANELA 12*80ML 20113", "valor": 12900},
-        {"codigo": "15042", "med": "UND", "nombre": "BON VARITA LAVA-PRO-MANZANI 12*80ML 0112", "valor": 12900},
-        {"codigo": "15041", "med": "UND", "nombre": "BON VARITAS FRUTOS ROJOS 12*80ML 0110", "valor": 12900},
+        {"codigo": "15042", "med": "UND", "nombre": "BON VARITA LAVA-PRO-MANZANI 12*80ML", "valor": 12900},
+        {"codigo": "15041", "med": "UND", "nombre": "BON VARITAS FRUTOS ROJOS 12*80ML", "valor": 12900},
         {"codigo": "15038", "med": "UND", "nombre": "BON VARITAS BAMBU 12*80ML 0107", "valor": 12900},
         {"codigo": "15037", "med": "UND", "nombre": "BON VARITAS ARMO FLORAL 12*80ML 0106", "valor": 12900},
         {"codigo": "15036", "med": "UND", "nombre": "BON VARITAS VAINILLA 12*40ML 10103", "valor": 7470},
-        {"codigo": "15035", "med": "UND", "nombre": "BON VARITAS MANZA/CANELA 12*40ML 10102", "valor": 7470},
+        {"codigo": "15035", "med": "UND", "nombre": "BON VARITAS MANZA/CANELA 12*40ML", "valor": 7470},
         {"codigo": "15034", "med": "UND", "nombre": "BON VARITAS FRUTO ROJO 12*40ML 10101", "valor": 7470},
         {"codigo": "15030", "med": "UND", "nombre": "BON SPRAY FRUTOS ROJOS 12*400ML 0111", "valor": 8290},
         {"codigo": "15021", "med": "UND", "nombre": "BON SPRAY BRISA TROPICAL 12*250 0101", "valor": 5340},
@@ -178,13 +179,13 @@
 
     let carrito = {};
 
-    function render() {
+    function renderProductos() {
         const div = document.getElementById('lista-productos');
         div.innerHTML = productos.map(p => `
             <div class="product-card" data-nombre="${p.nombre.toLowerCase()}" data-codigo="${p.codigo}">
                 <div class="product-info">
                     <h4>${p.nombre}</h4>
-                    <small>REF: ${p.codigo} | ${p.med}</small>
+                    <span class="details">REF: ${p.codigo} | Med: ${p.med}</span>
                     <span class="price">$${p.valor.toLocaleString()}</span>
                 </div>
                 <div class="qty-control">
@@ -212,27 +213,38 @@
             let p = productos.find(x => x.codigo === k);
             if(p) total += (p.valor * carrito[k]);
         }
-        document.getElementById('gran-total').innerText = `Total: $${total.toLocaleString()}`;
+        document.getElementById('gran-total').innerText = `Total Pedido: $${total.toLocaleString()}`;
     }
 
     function enviarPedido() {
         const cli = { n: document.getElementById('nombre').value, d: document.getElementById('direccion').value, c: document.getElementById('celular').value, p: document.getElementById('forma_pago').value, o: document.getElementById('observacion').value };
-        if (!cli.n || !cli.d || !cli.c) return alert("Faltan datos");
+        if (!cli.n || !cli.d || !cli.c) return alert("Por favor complete los datos obligatorios del cliente");
+
         let items = ""; let total = 0;
         for (let k in carrito) {
             if (carrito[k] > 0) {
                 let p = productos.find(x => x.codigo === k);
                 let sub = p.valor * carrito[k];
-                items += `✅ ${p.nombre}\n   ${carrito[k]} x $${p.valor.toLocaleString()} = $${sub.toLocaleString()}\n`;
+                items += `✅ ${p.nombre}\n   Cant: ${carrito[k]} x $${p.valor.toLocaleString()} = $${sub.toLocaleString()}\n`;
                 total += sub;
             }
         }
-        if (!items) return alert("Sin productos");
-        const msg = `*PEDIDO COFARMA*\n*Cli:* ${cli.n}\n*Dir:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*Pedido:*\n${items}\n*Total: $${total.toLocaleString()}*\n\n_Vibras Positivas ©_`;
+        if (!items) return alert("Debe agregar al menos un producto al pedido");
+
+        const msg = `*NUEVO PEDIDO - COFARMA*\n\n` +
+                  `*CLIENTE:* ${cli.n}\n` +
+                  `*DIRECCIÓN:* ${cli.d}\n` +
+                  `*CELULAR:* ${cli.c}\n` +
+                  `*FORMA DE PAGO:* ${cli.p}\n` +
+                  `*OBS:* ${cli.o}\n\n` +
+                  `*DETALLE DEL PEDIDO:*\n${items}\n` +
+                  `*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n` +
+                  `_App desarrollada por vibras positivas derechos de autor_`;
+
         window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
     }
 
-    render();
+    renderProductos();
 </script>
 </body>
 </html>
