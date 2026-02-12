@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cofarma - Distrileco</title>
+    <style>
+        :root {
+            --primary: #d32f2f; /* Rojo Distrileco */
+            --secondary: #1976d2; /* Azul complementario */
+            --light: #f4f4f4;
+            --dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        header {
+            background-color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container h1 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .search-bar {
+            margin-top: 10px;
+            padding: 8px;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .category-title {
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .product-card h3 {
+            font-size: 0.9rem;
+            margin: 10px 0 5px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-code {
+            font-size: 0.75rem;
+            color: #777;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.8rem;
+        }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <h1>DISTRILECO</h1>
+        <small>Distribuidor Autorizado COFARMA</small>
+    </div>
+    <input type="text" class="search-bar" placeholder="Buscar producto...">
+</header>
+
+<div class="container">
+    
+    <h2 class="category-title">Ambientadores Bon Aire</h2>
+    <div class="product-grid">
+        <div class="product-card">
+            <span class="badge">Nuevo</span>
+            <h3>Bon Aire Gel Repuesto x3 Manzana Canela</h3>
+            <span class="product-code">Código: 19932</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Aire Electra Repuesto x2 Vainilla</h3>
+            <span class="product-code">Código: 15172</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Aire Electra Oil Frutos Rojos</h3>
+            <span class="product-code">Código: 15168</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Aire Electra Oil Repuesto Frutos Rojos</h3>
+            <span class="product-code">Código: 15170</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Aire Eléctrico Repuesto x3 Frutos Rojos</h3>
+            <span class="product-code">Código: 15173</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Varitas Manzana Canela 80ml</h3>
+            <span class="product-code">Código: 15043</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Varitas Pomelo 80ml</h3>
+            <span class="product-code">Código: 15044</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Varitas Vainilla 80ml</h3>
+            <span class="product-code">Código: 15045</span>
+        </div>
+    </div>
+
+    <h2 class="category-title">Línea Pinolina (Limpieza)</h2>
+    <div class="product-grid">
+        <div class="product-card">
+            <h3>Pinolina Baby Fresh 960ml</h3>
+            <span class="product-code">Código: 15063</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Bambú 960ml</h3>
+            <span class="product-code">Código: 15064</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Canela 5000ml</h3>
+            <span class="product-code">Código: 15074</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Canela Miel DPK 200ml</h3>
+            <span class="product-code">Código: 15053</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Citronela 5000ml</h3>
+            <span class="product-code">Código: 15075</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Floral 960ml</h3>
+            <span class="product-code">Código: 15068</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Frutos Rojos 960ml</h3>
+            <span class="product-code">Código: 15070</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Lavanda 3785cc</h3>
+            <span class="product-code">Código: 15091</span>
+        </div>
+        <div class="product-card">
+            <h3>Pinolina Oxy Fusion Cítrica 960ml</h3>
+            <span class="product-code">Código: 19928</span>
+        </div>
+    </div>
+
+    <h2 class="category-title">Cuidado del Hogar e Insecticidas</h2>
+    <div class="product-grid">
+        <div class="product-card">
+            <h3>Aceite Citronela Alaska 250ml</h3>
+            <span class="product-code">Código: 15081</span>
+        </div>
+        <div class="product-card">
+            <h3>Ácido Desmanchador Alaska 460ml</h3>
+            <span class="product-code">Código: 15082</span>
+        </div>
+        <div class="product-card">
+            <h3>Creolina Alaska Concentrada 250cc</h3>
+            <span class="product-code">Código: 15083</span>
+        </div>
+        <div class="product-card">
+            <h3>Rayol Espiral x10 Rueditas</h3>
+            <span class="product-code">Código: 15076</span>
+        </div>
+        <div class="product-card">
+            <h3>Rayol Mata Voladores 230cc</h3>
+            <span class="product-code">Código: 15079</span>
+        </div>
+        <div class="product-card">
+            <h3>Rayol Spray Matatodo 400cc</h3>
+            <span class="product-code">Código: 15078</span>
+        </div>
+        <div class="product-card">
+            <h3>Bon Velaroma Bifásica Palo Santo</h3>
+            <span class="product-code">Código: 19929</span>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Distrileco - Línea Cofarma</p>
+    <p>App desarrollada por Vibras Positivas. Reserva derechos de autor.</p>
+</footer>
+
+</body>
+</html>
 
