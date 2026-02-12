@@ -26,7 +26,6 @@
         .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); text-align: center; }
         .total-banner { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; color: #333; }
         .btn-send { background: var(--success); color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
-        .distrileco-footer { background: #eee; padding: 15px; border-radius: 8px; font-size: 0.8rem; color: #555; margin-top: 20px; text-align: center; }
         .branding { font-size: 0.7rem; color: #999; text-align: center; margin: 15px 0; }
     </style>
 </head>
@@ -59,14 +58,8 @@
 
     <div id="lista-productos"></div>
 
-    <div class="distrileco-footer">
-        <strong>DISTRILECO S.A.</strong><br>
-        Carrera 2 diagonal 25 No 2-25, Caucasia Antioquia<br>
-        Celular/WhatsApp: 311 770 0431
-    </div>
-
     <div class="branding">
-        Línea Cofarma - Distribución Autorizada<br>
+        Distribuido por Distrileco | Carrera 2 diag 25 No 2-25, Caucasia Antioquia<br>
         <b>App desarrollada por Vibras Positivas © Derechos de Autor</b>
     </div>
 </div>
@@ -179,7 +172,7 @@
 
     let carrito = {};
 
-    function renderProductos() {
+    function render() {
         const div = document.getElementById('lista-productos');
         div.innerHTML = productos.map(p => `
             <div class="product-card" data-nombre="${p.nombre.toLowerCase()}" data-codigo="${p.codigo}">
@@ -218,13 +211,13 @@
 
     function enviarPedido() {
         const cli = { n: document.getElementById('nombre').value, d: document.getElementById('direccion').value, c: document.getElementById('celular').value, p: document.getElementById('forma_pago').value, o: document.getElementById('observacion').value };
-        if (!cli.n || !cli.d || !cli.c) return alert("Faltan datos obligatorios");
+        if (!cli.n || !cli.d || !cli.c) return alert("Faltan datos");
         let items = ""; let total = 0;
         for (let k in carrito) {
             if (carrito[k] > 0) {
                 let p = productos.find(x => x.codigo === k);
                 let sub = p.valor * carrito[k];
-                items += `• ${p.nombre} (${carrito[k]} x $${p.valor.toLocaleString()}) = $${sub.toLocaleString()}\n`;
+                items += `✅ ${p.nombre}\n   ${carrito[k]} x $${p.valor.toLocaleString()} = $${sub.toLocaleString()}\n`;
                 total += sub;
             }
         }
@@ -233,7 +226,7 @@
         window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
     }
 
-    renderProductos();
+    render();
 </script>
 </body>
 </html>
