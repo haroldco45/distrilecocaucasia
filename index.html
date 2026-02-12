@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos Cofarma - Distrileco</title>
     <style>
-        :root { --primary: #d32f2f; --secondary: #1976d2; --bg: #f4f7f6; }
+        :root { --primary: #d32f2f; --secondary: #1976d2; --bg: #f8f9fa; --success: #25d366; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 140px; }
         header { background: white; padding: 12px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .logo-header { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; }
@@ -14,6 +14,7 @@
         #buscador { width: 100%; padding: 12px 20px; border: 2px solid #ddd; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
         .container { padding: 0 15px; max-width: 650px; margin: auto; }
         .client-form { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .client-form h3 { margin-top:0; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 8px; }
         .client-form input, .client-form select, .client-form textarea { width: 100%; padding: 12px; margin: 6px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         .product-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; }
         .product-info h4 { margin: 0; font-size: 0.85rem; color: #333; text-transform: uppercase; }
@@ -21,9 +22,11 @@
         .product-info .price { color: var(--primary); font-weight: bold; font-size: 1rem; margin-top: 4px; display: block; }
         .qty-control { display: flex; align-items: center; gap: 10px; }
         .btn-qty { background: #eee; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px; }
-        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); text-align: center; }
-        .total-box { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; color: var(--primary); }
-        .btn-send { background: #25d366; color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
+        .qty-val { font-weight: bold; min-width: 25px; text-align: center; font-size: 18px; color: var(--secondary); }
+        .footer-action { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); text-align: center; }
+        .total-banner { margin-bottom: 8px; font-weight: bold; font-size: 1.2rem; color: #333; }
+        .btn-send { background: var(--success); color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 90%; max-width: 450px; cursor: pointer; font-size: 18px; }
+        .distrileco-footer { background: #eee; padding: 15px; border-radius: 8px; font-size: 0.8rem; color: #555; margin-top: 20px; text-align: center; }
         .branding { font-size: 0.7rem; color: #999; text-align: center; margin: 15px 0; }
     </style>
 </head>
@@ -42,9 +45,9 @@
 
 <div class="container">
     <div class="client-form">
-        <h3 style="margin-top:0; color: var(--primary); font-size: 1.1rem;">Datos del Pedido</h3>
-        <input type="text" id="nombre" placeholder="Nombre / Cliente">
-        <input type="text" id="direccion" placeholder="Dirección de entrega">
+        <h3>📍 Datos de Entrega</h3>
+        <input type="text" id="nombre" placeholder="Nombre completo / Cliente">
+        <input type="text" id="direccion" placeholder="Dirección exacta">
         <input type="tel" id="celular" placeholder="Celular">
         <select id="forma_pago">
             <option value="Contado">Contado</option>
@@ -56,22 +59,27 @@
 
     <div id="lista-productos"></div>
 
+    <div class="distrileco-footer">
+        <strong>DISTRILECO S.A.</strong><br>
+        Carrera 2 diagonal 25 No 2-25, Caucasia Antioquia<br>
+        Celular/WhatsApp: 311 770 0431
+    </div>
+
     <div class="branding">
-        Distribuido por Distrileco | Carrera 2 diag 25 No 2-25, Caucasia <br>
+        Línea Cofarma - Distribución Autorizada<br>
         <b>App desarrollada por Vibras Positivas © Derechos de Autor</b>
     </div>
 </div>
 
 <div class="footer-action">
-    <div class="total-box" id="gran-total">Total Pedido: $0</div>
-    <button class="btn-send" onclick="enviar()">🚀 Enviar a WhatsApp 3117700431</button>
+    <div class="total-banner" id="gran-total">Total: $0</div>
+    <button class="btn-send" onclick="enviarPedido()">🚀 Enviar Pedido a WhatsApp</button>
 </div>
 
 <script>
-    const FECHA_VENCIMIENTO = "2027-12-31";
     const WHATSAPP_DESTINO = "573117700431";
 
-    // --- LISTA OFICIAL REVISADA UNO A UNO ---
+    // --- LISTA OFICIAL EXTRAÍDA SIN ERRORES (94 PRODUCTOS) ---
     const productos = [
         {"codigo": "19930", "med": "UND", "nombre": "BON AIRE GEL REPT MANZ/CANE 24*40G 0106", "valor": 2850},
         {"codigo": "19910", "med": "UND", "nombre": "TERGO GLOP INODORO 24*2*48G CITRU 010201", "valor": 8700},
@@ -88,8 +96,8 @@
         {"codigo": "18693", "med": "UND", "nombre": "BON AIRE GEL REPT MORA SILVE 24*40G 0105", "valor": 2920},
         {"codigo": "18532", "med": "UND", "nombre": "BON AIRE GEL MORA CANASTA 12*40GR 0206", "valor": 4770},
         {"codigo": "18278", "med": "UND", "nombre": "RAYOL LIQ PISTOLA MATATODO 12*460ML 0101", "valor": 9050},
-        {"codigo": "18221", "med": "UND", "nombre": "BON AIRE ELECT OIL VAINILLA AMBAR 12*25 0107", "valor": 12580},
-        {"codigo": "18169", "med": "UND", "nombre": "BON AIRE ELECT RPT MANDARINA TORON 12*25 0207", "valor": 8850},
+        {"codigo": "18221", "med": "UND", "nombre": "BON AIRE ELECT OIL VAINILLA;AMBAR 12*25 0107", "valor": 12580},
+        {"codigo": "18169", "med": "UND", "nombre": "BON AIRE ELECT RPT MANDARINA;TORON 12*25 0207", "valor": 8850},
         {"codigo": "17918", "med": "UND", "nombre": "SPRAY DESINFECT COOL WATE DEOX 12*400", "valor": 10320},
         {"codigo": "17917", "med": "UND", "nombre": "BON SPRAY VAINILLA Y AMBAR 12*400ML", "valor": 8290},
         {"codigo": "17869", "med": "UND", "nombre": "BON SPRAY FRUTAS DEL CARIBE 12*400 30116", "valor": 8290},
@@ -177,39 +185,41 @@
             <div class="product-card" data-nombre="${p.nombre.toLowerCase()}" data-codigo="${p.codigo}">
                 <div class="product-info">
                     <h4>${p.nombre}</h4>
-                    <small>Cód: ${p.codigo} | ${p.med}</small>
+                    <small>Cód: ${p.codigo} | Med: ${p.med}</small>
                     <span class="price">$${p.valor.toLocaleString()}</span>
                 </div>
                 <div class="qty-control">
-                    <button class="btn-qty" onclick="act('${p.codigo}', -1)">-</button>
+                    <button class="btn-qty" onclick="cambiarCant('${p.codigo}', -1)">-</button>
                     <span class="qty-val" id="q-${p.codigo}">0</span>
-                    <button class="btn-qty" onclick="act('${p.codigo}', 1)">+</button>
+                    <button class="btn-qty" onclick="cambiarCant('${p.codigo}', 1)">+</button>
                 </div>
             </div>
         `).join('');
     }
 
     function filtrar() {
-        const q = document.getElementById('buscador').value.toLowerCase();
-        document.querySelectorAll('.product-card').forEach(c => {
-            const match = c.dataset.nombre.includes(q) || c.dataset.codigo.includes(q);
-            c.style.display = match ? 'flex' : 'none';
+        const query = document.getElementById('buscador').value.toLowerCase();
+        document.querySelectorAll('.product-card').forEach(card => {
+            const txt = card.dataset.nombre + card.dataset.codigo;
+            card.style.display = txt.includes(query) ? 'flex' : 'none';
         });
     }
 
-    function act(id, v) {
-        carrito[id] = Math.max(0, (carrito[id] || 0) + v);
+    function cambiarCant(id, val) {
+        carrito[id] = Math.max(0, (carrito[id] || 0) + val);
         document.getElementById(`q-${id}`).innerText = carrito[id];
         let total = 0;
         for (let k in carrito) {
-            total += (productos.find(x => x.codigo === k).valor * carrito[k]);
+            let p = productos.find(x => x.codigo === k);
+            total += (p.valor * carrito[k]);
         }
-        document.getElementById('gran-total').innerText = `Total Pedido: $${total.toLocaleString()}`;
+        document.getElementById('gran-total').innerText = `Total: $${total.toLocaleString()}`;
     }
 
-    function enviar() {
+    function enviarPedido() {
         const cli = { n: document.getElementById('nombre').value, d: document.getElementById('direccion').value, c: document.getElementById('celular').value, p: document.getElementById('forma_pago').value, o: document.getElementById('observacion').value };
-        if (!cli.n || !cli.d || !cli.c) return alert("Por favor complete los datos del cliente");
+        if (!cli.n || !cli.d || !cli.c) return alert("Por favor complete los datos obligatorios del cliente");
+
         let items = ""; let total = 0;
         for (let k in carrito) {
             if (carrito[k] > 0) {
@@ -219,8 +229,10 @@
                 total += sub;
             }
         }
-        if (!items) return alert("Agregue al menos un producto");
-        const msg = `*PEDIDO COFARMA - DISTRILECO*\n\n*Cliente:* ${cli.n}\n*Dir:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*Detalle del Pedido:*\n${items}\n*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n_Vibras Positivas © Derechos de Autor_`;
+
+        if (!items) return alert("Seleccione al menos un producto");
+
+        const msg = `*NUEVO PEDIDO COFARMA*\n\n*Cliente:* ${cli.n}\n*Dirección:* ${cli.d}\n*Tel:* ${cli.c}\n*Pago:* ${cli.p}\n*Obs:* ${cli.o}\n\n*Detalle:*\n${items}\n*TOTAL A PAGAR: $${total.toLocaleString()}*\n\n_App desarrollada por vibras positivas derechos de autor_`;
         window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINO}&text=${encodeURIComponent(msg)}`);
     }
 
